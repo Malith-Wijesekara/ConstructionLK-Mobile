@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
@@ -20,43 +20,57 @@ export class MapDirctionsPage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
-  start :any;
-  end :any;
-  lng : number;
+  start: any;
+  end: any;
+  lng: number;
   lat: number;
-  myLocation:any;
+  myLocation: any;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
 
   constructor(public navCtrl: NavController,
-       public navParams: NavParams,
-       private geolocation: Geolocation) {
-   
-        
+    public navParams: NavParams,
+    private geolocation: Geolocation,
+    public platform: Platform, ) {
+      
     this.start = new google.maps.LatLng(this.lat, this.lng);
     this.end = new google.maps.LatLng(6.831542, 79.874404);
-    this.getRoute();
+    this.getMyLocation();
+
   }
-  getMyLocation(){
+  getMyLocation() {
+
     let watch = this.geolocation.watchPosition();
-        watch.subscribe((data) => {
-          
-          this.lng = data.coords.latitude;
-          this.lat = data.coords.longitude;
-          this.myLocation = new LatLng(this.lat, this.lng);
-          return this.myLocation;
-        
-         
+    watch.subscribe((data) => {
+      let location = new LatLng(data.coords.latitude, data.coords.longitude);
+      this.myLocation = location;
+      if (this.myLocation != null)
+        this.getRoute();
     });
+    //console.log(navigator.geolocation);
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(function(position) {
+    //     var pos = {
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude
+    //     };    
+    //     console.log("Pos  "+pos);  
+
+    //     this.myLocation  = new google.maps.LatLng(pos);
+    //   }, function() {
+    //   });
+    // } else {
+    //   // Browser doesn't support Geolocation
+    // }
   }
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     this.initMap();
   }
 
   initMap() {
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       zoom: 7,
-      center: {lat: 41.85, lng: -87.65}
+      center: { lat: 41.85, lng: -87.65 }
     });
 
     this.directionsDisplay.setMap(this.map);
@@ -75,10 +89,12 @@ export class MapDirctionsPage {
       }
     });
   }
+  //_______________________Dirctions____________
   getRoute() {
+    alert(this.myLocation);
     this.directionsService.route({
-      origin: this.start,
-      destination: this.end,
+      origin: this.myLocation,
+      destination: new google.maps.LatLng(6.831542, 79.874404),
       travelMode: 'DRIVING'
     }, (response, status) => {
       if (status === 'OK') {
@@ -88,7 +104,7 @@ export class MapDirctionsPage {
       }
     });
   }
-  
 
- 
+
+
 }

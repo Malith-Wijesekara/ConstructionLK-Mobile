@@ -26,8 +26,6 @@ export class MyApp {
   TempConstructProfilpage: any;
   pages: Array<{title: string, component: any}>;
 
-  
-
   constructor(
     public platform: Platform, 
     public statusBar: StatusBar, 

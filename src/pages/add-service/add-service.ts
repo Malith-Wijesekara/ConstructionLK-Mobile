@@ -62,9 +62,10 @@ export class AddServicePage {
                   this.ServiceData.location = this.servicelocation;    
                   var headers = new Headers();
                   headers.append("Accept", 'application/json');
-                  let options = new RequestOptions({ headers: headers });       
+                  let options = new RequestOptions({ headers: headers });
+                  delete this.ServiceData.txtsupCatagory;       
                   let postParams =  this.ServiceData;  
-                  console.log(this.ServiceData);
+                  console.log("Service data :" + this.ServiceData);
                   this.http.post('http://constructionlkapi.azurewebsites.net/ItemService/AddNewService', postParams, options)
                     .subscribe(data => {
                       console.log("Service Added");        

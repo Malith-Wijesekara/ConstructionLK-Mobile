@@ -35,8 +35,8 @@ export class TestPage {
   currentregional: any;
   public lat :number;
   public lng:number;
-  private autharization : any;
-  private token : any;
+  private autharization : string;
+  private token : string;
   constructor(
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
@@ -52,19 +52,23 @@ export class TestPage {
     public geolocation: Geolocation
   ) {
     this.platform.ready().then(() => this.loadMaps());
-    this.regionals = [{
-      "title": "Marker 1",
-      "latitude": 52.50094,
-      "longitude": 13.29922,
-    }, {
-      "title": "Marker 3",
-      "latitude": 52.50010,
-      "longitude": 13.29922,
-    }, {
-      "title": "Marker 2",
-      "latitude": 49.1028606,
-      "longitude": 9.8426116
-    }];
+    // this.regionals = [{
+    //   "title": "Marker 1",
+    //   "latitude": 52.50094,
+    //   "longitude": 13.29922,
+    // }, {
+    //   "title": "Marker 3",
+    //   "latitude": 52.50010,
+    //   "longitude": 13.29922,
+    // }, {
+    //   "title": "Marker 2",
+    //   "latitude": 6.927079,
+    //   "longitude":79.861244
+    // }];
+    this.storage.get('StoredToken').then((localToken) => {
+      this.token = localToken; 
+      console.log('Clients Stored token is '+ this.token);               
+    });
   }
   pushToPayments(){
     let requestData={
@@ -73,11 +77,10 @@ export class TestPage {
       Message : "Please accept"
     }
     console.log(requestData);
-    this.storage.get('StoredToken').then((token) => {
-      this.token = token;
-                
-    });
-    this.autharization = 'Bearer '+this.token; 
+    
+    
+    this.autharization = 'Bearer '+ this.token; 
+    console.log(this.autharization);     
     var headers = new Headers();
     headers.append('Authorization',this.autharization);
     headers.append('Content-Type', 'application/json');
@@ -192,9 +195,9 @@ export class TestPage {
       var mapEle = this.mapElement.nativeElement;
       this.map = new google.maps.Map(mapEle, {
         zoom: 10,
-        center: { lat: 51.165691, lng: 10.451526 },
+        center: { lat: 6.927079, lng:79.861244 },
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        styles: [{ "featureType": "water", "elementType": "geometry", "stylers": [{ "color": "#e9e9e9" }, { "lightness": 17 }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "color": "#f5f5f5" }, { "lightness": 20 }] }, { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [{ "color": "#ffffff" }, { "lightness": 17 }] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "color": "#ffffff" }, { "lightness": 29 }, { "weight": 0.2 }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "color": "#ffffff" }, { "lightness": 18 }] }, { "featureType": "road.local", "elementType": "geometry", "stylers": [{ "color": "#ffffff" }, { "lightness": 16 }] }, { "featureType": "poi", "elementType": "geometry", "stylers": [{ "color": "#f5f5f5" }, { "lightness": 21 }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "color": "#dedede" }, { "lightness": 21 }] }, { "elementType": "labels.text.stroke", "stylers": [{ "visibility": "on" }, { "color": "#ffffff" }, { "lightness": 16 }] }, { "elementType": "labels.text.fill", "stylers": [{ "saturation": 36 }, { "color": "#333333" }, { "lightness": 40 }] }, { "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "geometry", "stylers": [{ "color": "#f2f2f2" }, { "lightness": 19 }] }, { "featureType": "administrative", "elementType": "geometry.fill", "stylers": [{ "color": "#fefefe" }, { "lightness": 20 }] }, { "featureType": "administrative", "elementType": "geometry.stroke", "stylers": [{ "color": "#fefefe" }, { "lightness": 17 }, { "weight": 1.2 }] }],
+       // styles: [{ "featureType": "water", "elementType": "geometry", "stylers": [{ "color": "#e9e9e9" }, { "lightness": 17 }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "color": "#f5f5f5" }, { "lightness": 20 }] }, { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [{ "color": "#ffffff" }, { "lightness": 17 }] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "color": "#ffffff" }, { "lightness": 29 }, { "weight": 0.2 }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "color": "#ffffff" }, { "lightness": 18 }] }, { "featureType": "road.local", "elementType": "geometry", "stylers": [{ "color": "#ffffff" }, { "lightness": 16 }] }, { "featureType": "poi", "elementType": "geometry", "stylers": [{ "color": "#f5f5f5" }, { "lightness": 21 }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "color": "#dedede" }, { "lightness": 21 }] }, { "elementType": "labels.text.stroke", "stylers": [{ "visibility": "on" }, { "color": "#ffffff" }, { "lightness": 16 }] }, { "elementType": "labels.text.fill", "stylers": [{ "saturation": 36 }, { "color": "#333333" }, { "lightness": 40 }] }, { "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "geometry", "stylers": [{ "color": "#f2f2f2" }, { "lightness": 19 }] }, { "featureType": "administrative", "elementType": "geometry.fill", "stylers": [{ "color": "#fefefe" }, { "lightness": 20 }] }, { "featureType": "administrative", "elementType": "geometry.stroke", "stylers": [{ "color": "#fefefe" }, { "lightness": 17 }, { "weight": 1.2 }] }],
         disableDoubleClickZoom: false,
         disableDefaultUI: true,
         zoomControl: true,
@@ -341,7 +344,7 @@ export class TestPage {
             zoom: 14
           };
           this.map.setOptions(options);
-          this.addMarker(this.myPos, "Mein Standort!");
+          this.addMarker(this.myPos, "");
 
           let alert = this.alertCtrl.create({
             title: 'Location',

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ProgressReviewPage } from '../progress-review/progress-review';
 
 /**
- * Generated class for the ForgotPasswordPage page.
+ * Generated class for the RequestDetailsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,18 +10,18 @@ import { ProgressReviewPage } from '../progress-review/progress-review';
 
 @IonicPage()
 @Component({
-  selector: 'page-forgot-password',
-  templateUrl: 'forgot-password.html',
+  selector: 'page-request-details',
+  templateUrl: 'request-details.html',
 })
-export class ForgotPasswordPage {
-  private FrmForgotPW = {};
+export class RequestDetailsPage {
+  private serviceId : any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.serviceId = this.navParams.get('id');
+    console.log(this.serviceId);
   }
 
-  logForm(){
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad RequestDetailsPage');
+  }
 
-  }
-  chart(){
-    this.navCtrl.push(ProgressReviewPage);
-  }
 }

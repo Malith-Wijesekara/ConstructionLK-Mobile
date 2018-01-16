@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { Http,Headers } from '@angular/http';
 import { AddServicePage } from '../add-service/add-service';
+import { RequestDetailsPage } from '../request-details/request-details';
+import { ServiceDetailsPage } from '../service-details/service-details';
 
 
 @IonicPage()
@@ -20,7 +22,9 @@ export class ConstructorProfilePage {
   private userId: any;
   private form: FormGroup;
   private requests :any;
+  private myServices :any;
   private localToken : string;
+
   constructor(
     public slideMenu: MenuController,
     public navCtrl: NavController, 
@@ -57,7 +61,29 @@ export class ConstructorProfilePage {
   }
 //________________show offered services_________
 getMyServices(){
+  let loading = this.loadingController.create({content : "Loading..."});
+  loading.present();
+  this.autharization = 'Bearer '+this.localToken; 
+  var headers = new Headers();
+  headers.append('Authorization',this.autharization);
+  headers.append('Accept', 'application/json');
+  this.http.get('http://constructionlkapi.azurewebsites.net/ServiceProvider/GetServiceItems', { headers: headers }).map(res => res.json())
+  .subscribe(data => {
+    this.myServices = data;
+    console.log(this.myServices);
+    //this.userId = this.requests.Id;
+    
+    loading.dismissAll();
+  }, error => {
+    console.log(error);
+  })
   
+  loading.dismissAll();
+}
+
+moreServiceData(id){
+  console.log(id);
+  this.navCtrl.push(ServiceDetailsPage,{id:id});
 }
 //________________show  Client requests_________
   getRequests() {
@@ -77,14 +103,12 @@ getMyServices(){
     }, error => {
       console.log(error);
     })
-    this.storage.get('StoredToken').then((val) => {
-      
-    });
+    
     loading.dismissAll();
   }
-  moreSearchData(id){
+  moreRequestData(id){
     console.log(id);
-    //this.navCtrl.push(SearchResultPage,{id:id});
+    this.navCtrl.push(RequestDetailsPage,{id:id});
   }
 
   getLoginUserData(Token: String) {

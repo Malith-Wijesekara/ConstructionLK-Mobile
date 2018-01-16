@@ -1,4 +1,9 @@
 page-test {
+    .btnSend{
+        margin-top:480px;
+        width:80%;
+        margin-left:10%;
+    }
     .pageBg{
         background-color: #002B36;
         align-content: center;
@@ -11,7 +16,8 @@ page-test {
     #map {
         height: 80%;
         width: 98%;
-        
+        margin-left:1%;
+        margin-top: 1%;
         position: absolute!important;
         overflow: hidden!important;
     }

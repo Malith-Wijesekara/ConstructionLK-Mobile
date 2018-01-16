@@ -20,7 +20,7 @@
     <ion-segment-button (click)=" getRequests()" value="home">
       <ion-icon name="home"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="services">
+    <ion-segment-button (click)="getMyServices()" value="services">
       <ion-icon md="md-hammer" name="hammer"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="settings" color="secondary">
@@ -50,9 +50,6 @@
           </ion-grid>
       </div>
     </ion-list>
-
-
-
     <!--_________________Home tab_____________-->
     <ion-list *ngSwitchCase="'home'">
       <ion-item>
@@ -66,7 +63,7 @@
                 <h2>{{ req.CusName }}</h2>
                 <p><ion-badge item-right>{{ req.Time }}</ion-badge></p>                
                 <ion-badge item-right>
-                  <button ion-button (click) =  "moreSearchData(req.Id)">Details>></button></ion-badge>
+                  <button ion-button (click) =  "moreRequestData(req.JobId)">Details>></button></ion-badge>
               </ion-item>
             </ion-list>
           </div>
@@ -78,14 +75,14 @@
 
     <!--_________________Sevices tab_____________-->
     <ion-list *ngSwitchCase="'services'">
-      <ion-card>
+      <!-- <ion-card>
         <ion-list>
           <ion-item class="styleStatus">
             <ion-label>Status</ion-label>
             <ion-toggle class="toggle" [(ngModel)]="status"></ion-toggle>
           </ion-item>
         </ion-list>
-      </ion-card>
+      </ion-card> -->
 
 
       <ion-card>
@@ -94,9 +91,21 @@
           <ion-card-title>
             My services
           </ion-card-title>
-          <p>
-            The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
-          </p>
+          <div *ngIf = "myServices">
+            <ion-list >
+            <ion-item  *ngFor = "let service of myServices">
+              <ion-avatar item-start>
+                <img src= "../assets/img/construction.png">
+              </ion-avatar>
+              <h2>{{ service.Name }}</h2>
+                            
+              <ion-badge item-right>
+                <button class="lstBtn" ion-button (click) =  "moreServiceData(service.Id)">>></button></ion-badge>
+            </ion-item>
+          </ion-list>
+        </div>
+
+
           <button ion-button icon-start (click)="addService()">
             <ion-icon name="add-circle"></ion-icon>
             new service

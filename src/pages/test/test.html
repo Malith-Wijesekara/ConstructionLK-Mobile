@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="secondary">
     <ion-title>
-      Request a Service
+      Service Location
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)='toggleSearch()'>
@@ -31,8 +31,9 @@
     <ion-searchbar #searchbar placeholder="Search a Location" [hidden]="!search"></ion-searchbar>
     <div id="map" #map></div>    
   </div>
-  <div>
-      <button ion-button height="45px" [disabled]="!lat" color="secondary" block (click)="pushToPayments()">Send request</button>
+ <div>
+    <ion-icon name="send"></ion-icon>
+     <button class="btnSend" ion-button height="45px" [disabled]="!lat" color="secondary" block (click)="pushToPayments()">Send request</button>
 
-  </div>
+ </div>
 </ion-content>

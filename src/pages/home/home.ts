@@ -32,8 +32,8 @@ export class HomePage implements OnInit {
     private LoginFormBuilder: FormBuilder,
     private alertCtrl: AlertController,
     public storage: Storage) {
-      
-    this.slideMenu.swipeEnable(true);
+      //this.storage.remove("StoredToken");
+      this.slideMenu.swipeEnable(true);
   }
   postLogin() {
     let loading = this.loadingController.create({content : "Logging in, please wait..."});

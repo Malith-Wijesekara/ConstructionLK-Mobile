@@ -33,7 +33,7 @@
         </ion-item>
         <ion-item *ngIf = "FrmAddNewService.txtsupCatagory">
           <ion-label  color="primary" stacked>Subcatagory ID</ion-label>
-          <ion-select  multiple="false"  *ngIf = "subCatagory"  [(ngModel)]="FrmAddNewService.SubCatagoryID" name="SubCatagoryID" >
+          <ion-select  multiple="false"  *ngIf = "subCatagory"  [(ngModel)]="FrmAddNewService.SubCategoryId" name="SubCategoryId" >
               <ion-option *ngFor = "let sub of subCatagory" value='{{sub.SubId}}'> {{sub.SubName}}</ion-option>           
             </ion-select>
         </ion-item>

@@ -54,10 +54,16 @@ export class ProfilePage {
             DateOfBirth:  [''],
             
           });
+          
           this.storage.get('StoredToken').then((token) => {
             console.log('Clients Stored token is', token);
             this.getLoginUserData(token);            
           });
+          
+  }
+  hideSearch(event){
+    console.log("Blur");
+    this.searchData = null;
   }
   getLoginUserData(Token: String) {
    
