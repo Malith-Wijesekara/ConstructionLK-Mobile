@@ -1,9 +1,10 @@
 page-test {
-    .btnSend{
-        margin-top:480px;
-        width:80%;
-        margin-left:10%;
+    .stCard{
+        border-radius: 10p;
+        margin-top:420px;
+        position: relative!important;        
     }
+    
     .pageBg{
         background-color: #002B36;
         align-content: center;
@@ -13,13 +14,24 @@ page-test {
         text-align: center;
         font-size: 10pt;
      }
+     ion-textarea{
+         margin: 20px;
+         font-size: 14pt;
+         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+     }
+     .button{
+         margin: 10%;
+         width: 80%;
+         height:50px;
+     }
     #map {
-        height: 80%;
-        width: 98%;
-        margin-left:1%;
-        margin-top: 1%;
+        height: 400px;
+        width: 96%;
+        margin-left:2%;
+        margin-top: 2%;
         position: absolute!important;
         overflow: hidden!important;
+        border-radius: 10px;
     }
     .currentitem {
         position: fixed;

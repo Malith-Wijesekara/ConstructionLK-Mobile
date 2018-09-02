@@ -8,7 +8,10 @@
 
   <ion-navbar color="secondary">
     <ion-title>Dirctions to Service</ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="closeModal()">Close</button>
+      </ion-buttons>
+  </ion-navbar> 
 
 </ion-header>
 
@@ -16,6 +19,6 @@
 <ion-content padding class="pageBg">
  
     <div #map id="map"></div>
-    <button ion-button (click)="this.getRoute()" height="45px" width="100px" color="secondary" block>Refresh </button>
+    <button ion-button (click)="getRoute()" height="45px" width="100px" color="secondary" block>Refresh </button>
     
 </ion-content>

@@ -9,6 +9,7 @@ import { identifierModuleUrl } from '@angular/compiler/compiler';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { ActionSheetController, AlertController, App,  Platform, ToastController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { ProfilePage } from '../client-profile/client-profile';
 
 declare var google: any;
 declare var MarkerClusterer: any;
@@ -18,12 +19,14 @@ declare var MarkerClusterer: any;
   templateUrl: 'test.html',
 })
 export class TestPage {
+  itemId: any;
+  paymentData: any;
+  message: any;
 @ViewChild('map') mapElement: ElementRef;
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
   addressElement: HTMLInputElement = null;
-
+  todo = {};
   listSearch: string = '';
-
   map: any;
   marker: any;
   loading: any;
@@ -38,6 +41,7 @@ export class TestPage {
   private autharization : string;
   private token : string;
   constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
@@ -51,32 +55,29 @@ export class TestPage {
     public actionSheetCtrl: ActionSheetController,
     public geolocation: Geolocation
   ) {
-    this.platform.ready().then(() => this.loadMaps());
-    // this.regionals = [{
-    //   "title": "Marker 1",
-    //   "latitude": 52.50094,
-    //   "longitude": 13.29922,
-    // }, {
-    //   "title": "Marker 3",
-    //   "latitude": 52.50010,
-    //   "longitude": 13.29922,
-    // }, {
-    //   "title": "Marker 2",
-    //   "latitude": 6.927079,
-    //   "longitude":79.861244
-    // }];
+    this.platform.ready().then(() => this.loadMaps());   
     this.storage.get('StoredToken').then((localToken) => {
       this.token = localToken; 
       console.log('Clients Stored token is '+ this.token);               
     });
+    this.storage.get('serviceId').then((serviceId) => {
+      this.itemId = serviceId; 
+                    
+    });
+    
   }
-  pushToPayments(){
+  sendRequest(){
+    let loading = this.loadingCtrl.create({content : "Sending Request..."});
+    loading.present();
+   this.message = this.todo; 
+    console.log(this.message.description);
     let requestData={
       Location :{Lat : this.lat, Lon : this.lng},
-      ItemId : this.navParams.get('id'),
-      Message : "Please accept"
+      ItemId :this.itemId ,
+      Message : this.message.description,
+      paytoken :this.navParams.get('token')
     }
-    console.log(requestData);
+    //alert(requestData.paytoken);
     
     
     this.autharization = 'Bearer '+ this.token; 
@@ -87,9 +88,12 @@ export class TestPage {
     let options = new RequestOptions({ headers: headers });       
     
     this.http.post('http://constructionlkapi.azurewebsites.net/Request/NewRequest', requestData, options)
-      .subscribe(data => {
-        console.log("Success");        
+      .subscribe(data => {         
+        this.showToast("Request sent Success!") ;
+        this.navCtrl.push(ProfilePage);  
+        loading.dismissAll(); 
       }, error => {
+        loading.dismissAll();
         let alert = this.alertCtrl.create({
           title: 'Sorry',
           subTitle: error._body,
@@ -131,8 +135,7 @@ export class TestPage {
   }
 
   mapsSearchBar(ev: any) {
-    // set input to the value of the searchbar
-    //this.search = ev.target.value;
+    
     console.log(ev);
     const autocomplete = new google.maps.places.Autocomplete(ev);
     autocomplete.bindTo('bounds', this.map);
@@ -392,7 +395,8 @@ export class TestPage {
     let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
-      position: position
+      position: position,
+      icon: "./assets/img/pin.png"
     });
 
     this.addInfoWindow(marker, content);

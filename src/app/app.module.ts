@@ -30,6 +30,11 @@ import { TestPage } from '../pages/test/test';
 import { RequestDetailsPage } from '../pages/request-details/request-details';
 import { ServiceDetailsPage } from '../pages/service-details/service-details';
 import {ChartsModule} from 'ng2-charts'
+import { CallNumber } from '@ionic-native/call-number';
+import { ProgressUpdatePage } from '../pages/progress-update/progress-update';
+import { PickLocationPage } from '../pages/pick-location/pick-location';
+import { EditServicePage } from '../pages/edit-service/edit-service';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -47,7 +52,11 @@ import {ChartsModule} from 'ng2-charts'
     ServiceDetailsPage,
     TestPage,
     ConstructorProfilePage,
-    Test2Page
+    Test2Page,
+    ProgressUpdatePage,
+    PickLocationPage,
+    EditServicePage
+   
   ],
   imports: [
     BrowserModule,
@@ -75,7 +84,11 @@ import {ChartsModule} from 'ng2-charts'
     ProgressReviewPage,
     TestPage,
     ConstructorProfilePage,
-    Test2Page
+    Test2Page,
+    ProgressUpdatePage,
+    PickLocationPage,
+    EditServicePage
+ 
   ],
   providers: [
     GoogleMaps,
@@ -83,6 +96,7 @@ import {ChartsModule} from 'ng2-charts'
     StatusBar,
     SplashScreen,
     Camera,
+    CallNumber,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},   
     ProvidersearchResultsProvider,
